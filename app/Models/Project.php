@@ -11,8 +11,6 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
- *
- *
  * @property int $id
  * @property string $name
  * @property string|null $description
@@ -20,6 +18,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\User> $users
  * @property-read int|null $users_count
+ *
  * @method static \Database\Factories\ProjectFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder|Project newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Project newQuery()
@@ -29,8 +28,10 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @method static \Illuminate\Database\Eloquent\Builder|Project whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Project whereName($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Project whereUpdatedAt($value)
+ *
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\ProjectUser> $projectUser
  * @property-read int|null $project_user_count
+ *
  * @mixin \Eloquent
  */
 class Project extends Model
@@ -38,6 +39,11 @@ class Project extends Model
     use HasFactory;
 
     protected $guarded = ['id'];
+
+    protected static function booted(): void
+    {
+        static::addGlobalScope(new UserProjectScope());
+    }
 
     public function users(): BelongsToMany
     {
@@ -52,10 +58,5 @@ class Project extends Model
     public function tasks(): HasMany
     {
         return $this->hasMany(Task::class);
-    }
-
-    protected static function booted(): void
-    {
-        static::addGlobalScope(new UserProjectScope());
     }
 }

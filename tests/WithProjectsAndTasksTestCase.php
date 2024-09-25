@@ -28,7 +28,5 @@ class WithProjectsAndTasksTestCase extends TestCase
         $this->user     = User::factory()->create();
         $this->projects = Project::factory(10)->create();
         $this->user->projects()->attach($this->projects);
-
-
     }
 }

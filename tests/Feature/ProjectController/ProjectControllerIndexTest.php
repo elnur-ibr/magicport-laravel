@@ -4,9 +4,6 @@ declare(strict_types=1);
 
 namespace Tests\Feature\ProjectController;
 
-use App\Models\Project;
-use App\Models\User;
-use Tests\TestCase;
 use Tests\WithProjectsAndTasksTestCase;
 
 class ProjectControllerIndexTest extends WithProjectsAndTasksTestCase

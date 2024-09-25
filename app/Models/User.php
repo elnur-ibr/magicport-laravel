@@ -12,8 +12,6 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 
 /**
- * 
- *
  * @property int $id
  * @property string $name
  * @property string $email
@@ -28,6 +26,7 @@ use Laravel\Sanctum\HasApiTokens;
  * @property-read int|null $projects_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \Laravel\Sanctum\PersonalAccessToken> $tokens
  * @property-read int|null $tokens_count
+ *
  * @method static \Database\Factories\UserFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder|User newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|User newQuery()
@@ -40,6 +39,7 @@ use Laravel\Sanctum\HasApiTokens;
  * @method static \Illuminate\Database\Eloquent\Builder|User wherePassword($value)
  * @method static \Illuminate\Database\Eloquent\Builder|User whereRememberToken($value)
  * @method static \Illuminate\Database\Eloquent\Builder|User whereUpdatedAt($value)
+ *
  * @mixin \Eloquent
  */
 class User extends Authenticatable
@@ -69,11 +69,6 @@ class User extends Authenticatable
         'remember_token',
     ];
 
-    public function projects(): BelongsToMany
-    {
-        return $this->belongsToMany(Project::class);
-    }
-
     /**
      * Get the attributes that should be cast.
      *
@@ -85,5 +80,10 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password'          => 'hashed',
         ];
+    }
+
+    public function projects(): BelongsToMany
+    {
+        return $this->belongsToMany(Project::class);
     }
 }
