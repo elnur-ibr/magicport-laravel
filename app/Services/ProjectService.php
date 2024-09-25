@@ -10,9 +10,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class ProjectService
 {
-    /**
-     * @return void
-     */
     public function create(AuthenticatableContract $user, array $data): Model
     {
         $repository = new ProjectRepository();
