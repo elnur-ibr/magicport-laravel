@@ -1,9 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace ProjectController;
 
 use App\Models\User;
-use Illuminate\Support\Facades\DB;
 use Tests\RequestFactories\ProjectStoreRequestFactory;
 use Tests\TestCase;
 
@@ -17,7 +18,7 @@ class ProjectControllerStoreTest extends TestCase
         $user = User::factory()->create();
         $data = ProjectStoreRequestFactory::new()->create();
 
-        $response = $this->actingAs($user,'sanctum')
+        $response = $this->actingAs($user, 'sanctum')
             ->postJson(route('api.v1.project.store'), $data);
 
         $this->assertDatabaseHas('projects', $data);

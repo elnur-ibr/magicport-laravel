@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tests\Feature\ProjectController;
 
 use App\Models\User;
@@ -12,8 +14,8 @@ class ProjectControllerIndexTest extends TestCase
      */
     public function test_example(): void
     {
-        $user = User::factory()->create();
-        $response = $this->actingAs($user,'sanctum')
+        $user     = User::factory()->create();
+        $response = $this->actingAs($user, 'sanctum')
             ->getJson(route('api.v1.project.index'));
 
         dump($response->status(), $response->json());
