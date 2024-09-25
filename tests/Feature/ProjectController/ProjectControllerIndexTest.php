@@ -4,22 +4,23 @@ declare(strict_types=1);
 
 namespace Tests\Feature\ProjectController;
 
+use App\Models\Project;
 use App\Models\User;
 use Tests\TestCase;
+use Tests\WithProjectsAndTasksTestCase;
 
-class ProjectControllerIndexTest extends TestCase
+class ProjectControllerIndexTest extends WithProjectsAndTasksTestCase
 {
     /**
      * A basic feature test example.
      */
     public function test_example(): void
     {
-        $user     = User::factory()->create();
-        $response = $this->actingAs($user, 'sanctum')
+        $response = $this->actingAs($this->user, 'sanctum')
             ->getJson(route('api.v1.project.index'));
 
-        dump($response->status(), $response->json());
-
-        $response->assertStatus(200);
+        $response->assertStatus(200)->assertJson([
+            'total' => 10,
+        ]);
     }
 }

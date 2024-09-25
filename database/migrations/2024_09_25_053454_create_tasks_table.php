@@ -17,7 +17,7 @@ return new class() extends Migration
     {
         Schema::create('tasks', function (Blueprint $table): void {
             $table->id();
-            $table->foreignIdFor(Project::class)->constrained();
+            $table->foreignIdFor(Project::class)->index()->constrained();
             $table->string('name');
             $table->string('description', 510)->nullable();
             $table->unsignedTinyInteger('status')->default(TaskStatusEnum::TODO)->index();

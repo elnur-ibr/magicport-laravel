@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Database\Factories;
 
+use App\Enums\TaskStatusEnum;
+use App\Models\Project;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -19,6 +21,10 @@ class TaskFactory extends Factory
     public function definition(): array
     {
         return [
+            'project_id'  => Project::factory(),
+            'name'        => $this->faker->text(240),
+            'description' => $this->faker->text(500),
+            'status'      => TaskStatusEnum::TODO,
         ];
     }
 }

@@ -17,8 +17,12 @@ return new class() extends Migration
     {
         Schema::create('project_user', function (Blueprint $table): void {
             $table->id();
-            $table->foreignIdFor(Project::class)->constrained();
-            $table->foreignIdFor(User::class)->constrained();
+            $table->foreignIdFor(Project::class)->index()->constrained();
+            $table->foreignIdFor(User::class)->index()->constrained();
+        });
+
+        Schema::table('project_user', function (Blueprint $table): void {
+            $table->index(['project_id', 'user_id']);
         });
     }
 

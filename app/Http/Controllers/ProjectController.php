@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ProjectStoreRequest;
+use App\Models\Project;
 use App\Services\ProjectService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -15,17 +16,16 @@ class ProjectController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(): JsonResponse
+    public function index(ProjectService $projectService): JsonResponse
     {
-        return response()->json('ok');
+        return response()->json($projectService->all());
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(ProjectStoreRequest $request): JsonResponse
+    public function store(ProjectStoreRequest $request, ProjectService $projectService): JsonResponse
     {
-        $projectService  = new ProjectService();
         $projectInstance = $projectService->create(Auth::user(), $request->validated());
 
         return response()->json($projectInstance);
@@ -34,7 +34,10 @@ class ProjectController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id): void {}
+    public function show(Project $project)
+    {
+        return response()->json($project);
+    }
 
     /**
      * Update the specified resource in storage.
