@@ -22,11 +22,11 @@ class WithProjectsAndTasksTestCase extends TestCase
         parent::setUp();
 
         // Some random projects
-        Project::factory(5)->withRandomUsers()->create();
+        Project::factory(5)->withRandomUsers()->withRandomNumberOfTask()->create();
 
         // Creating test user and test data
         $this->user     = User::factory()->create();
-        $this->projects = Project::factory(10)->create();
+        $this->projects = Project::factory(10)->withRandomNumberOfTask()->create();
         $this->user->projects()->attach($this->projects);
     }
 }

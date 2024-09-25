@@ -11,7 +11,7 @@ class ProjectControllerIndexTest extends WithProjectsAndTasksTestCase
     /**
      * A basic feature test example.
      */
-    public function test_example(): void
+    public function success(): void
     {
         $response = $this->actingAs($this->user, 'sanctum')
             ->getJson(route('api.v1.project.index'));

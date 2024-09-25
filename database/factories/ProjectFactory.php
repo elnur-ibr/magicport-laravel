@@ -4,9 +4,12 @@ declare(strict_types=1);
 
 namespace Database\Factories;
 
+use App\Enums\TaskStatusEnum;
 use App\Models\Project;
+use App\Models\Task;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Database\Eloquent\Factories\Sequence;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Project>
@@ -30,6 +33,19 @@ class ProjectFactory extends Factory
     {
         return $this->afterCreating(function (Project $project): void {
             $project->users()->attach(User::factory()->create());
+        });
+    }
+
+    public function withRandomNumberOfTask(): static
+    {
+        return $this->afterCreating(function (Project $project): void {
+            Task::factory(['project_id' => $project->id])
+                ->count(rand(1, 10))
+                ->sequence(
+                    ['status' => TaskStatusEnum::TODO],
+                    ['status' => TaskStatusEnum::IN_PROGRESS],
+                    ['status' => TaskStatusEnum::DONE],
+                )->create();
         });
     }
 }

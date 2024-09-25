@@ -11,9 +11,10 @@ class ProjectControllerShowTest extends WithProjectsAndTasksTestCase
     /**
      * A basic feature test example.
      */
-    public function test_example(): void
+    public function success(): void
     {
         $project = $this->projects->get(3);
+        $project->loadMissing('tasks');
 
         $response = $this->actingAs($this->user, 'sanctum')
             ->getJson(route('api.v1.project.show', ['project' => $project->id]));
@@ -22,6 +23,7 @@ class ProjectControllerShowTest extends WithProjectsAndTasksTestCase
             'id'          => $project->id,
             'name'        => $project->name,
             'description' => $project->description,
+            'tasks_count' => $project->tasks->count()
         ]);
     }
 }

@@ -12,7 +12,9 @@ class ProjectService
 {
     public function all()
     {
-        return Project::paginate();
+        $repository = new ProjectRepository();
+
+        return $repository->all();
     }
 
     public function create(AuthenticatableContract $user, array $data)

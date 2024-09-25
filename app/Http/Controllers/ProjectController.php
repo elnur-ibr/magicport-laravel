@@ -36,13 +36,17 @@ class ProjectController extends Controller
      */
     public function show(Project $project)
     {
+        $project->loadCount('tasks');
+
         return response()->json($project);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id): void {}
+    public function update(Request $request, string $id): void {
+
+    }
 
     /**
      * Remove the specified resource from storage.
