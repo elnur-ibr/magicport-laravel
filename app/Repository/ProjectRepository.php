@@ -15,6 +15,7 @@ class ProjectRepository
         return Project::withCount('tasks')
             ->paginate();
     }
+
     public function create(AuthenticatableContract $user, array $data): Model
     {
         $project = Project::create($data);

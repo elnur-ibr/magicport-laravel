@@ -23,7 +23,7 @@ class ProjectControllerShowTest extends WithProjectsAndTasksTestCase
             'id'          => $project->id,
             'name'        => $project->name,
             'description' => $project->description,
-            'tasks_count' => $project->tasks->count()
+            'tasks_count' => $project->tasks->count(),
         ]);
     }
 }
