@@ -5,8 +5,6 @@ declare(strict_types=1);
 namespace App\Services;
 
 use App\Models\Project;
-use App\Models\ProjectUser;
-use App\Models\Task;
 use App\Repository\ProjectRepository;
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Support\Facades\DB;
@@ -40,7 +38,7 @@ class ProjectService
         return $this->repository->update($projectId, $data);
     }
 
-    public function destroy(int $projectId)
+    public function destroy(int $projectId): void
     {
         DB::beginTransaction();
 

@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace ProjectController;
 
 use App\Models\Project;
-use Illuminate\Support\Facades\DB;
 use PHPUnit\Framework\Attributes\Test;
 use Tests\RequestFactories\ProjectStoreRequestFactory;
 use Tests\WithProjectsAndTasksTestCase;
@@ -15,7 +14,7 @@ class ProjectControllerUpdateTest extends WithProjectsAndTasksTestCase
     #[Test]
     public function success(): void
     {
-        $data = ProjectStoreRequestFactory::new()->create();
+        $data    = ProjectStoreRequestFactory::new()->create();
         $project = $this->projects->get(2);
 
         $response = $this->actingAs($this->user, 'sanctum')
@@ -33,7 +32,7 @@ class ProjectControllerUpdateTest extends WithProjectsAndTasksTestCase
     #[Test]
     public function tryingToUpdateProjectThatDoesNotBelongToUser(): void
     {
-        $data = ProjectStoreRequestFactory::new()->create();
+        $data    = ProjectStoreRequestFactory::new()->create();
         $project = Project::factory()->withRandomUsers()->create();
 
         $response = $this->actingAs($this->user, 'sanctum')

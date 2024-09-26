@@ -7,7 +7,6 @@ namespace ProjectController;
 use App\Models\Project;
 use Illuminate\Support\Facades\DB;
 use PHPUnit\Framework\Attributes\Test;
-use Tests\RequestFactories\ProjectStoreRequestFactory;
 use Tests\WithProjectsAndTasksTestCase;
 
 class ProjectControllerDeleteTest extends WithProjectsAndTasksTestCase

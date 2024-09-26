@@ -32,7 +32,8 @@ class ProjectRepository
         return $project;
     }
 
-    public function update(int $projectId, array $data): Project {
+    public function update(int $projectId, array $data): Project
+    {
         $project = $this->get($projectId);
         $project->update($data);
 

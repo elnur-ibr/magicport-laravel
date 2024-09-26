@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Events;
 
 use App\Models\Project;
@@ -15,7 +17,5 @@ class ProjectDeleting
      */
     public function __construct(
         public Project $project
-    )
-    {
-    }
+    ) {}
 }
