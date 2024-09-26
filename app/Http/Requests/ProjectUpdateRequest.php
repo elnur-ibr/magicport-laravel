@@ -24,8 +24,8 @@ class ProjectUpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name'        => 'sometimes|string:255',
-            'description' => 'sometimes|string:500',
+            'name'        => 'sometimes|string|max:255',
+            'description' => 'sometimes|string|max:500',
         ];
     }
 }

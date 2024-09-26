@@ -4,28 +4,28 @@ declare(strict_types=1);
 
 namespace ProjectController;
 
-use App\Models\User;
+use App\Models\Project;
 use PHPUnit\Framework\Attributes\Test;
 use Tests\RequestFactories\ProjectStoreRequestFactory;
-use Tests\TestCase;
+use Tests\WithProjectsAndTasksTestCase;
 
-class ProjectControllerStoreTest extends TestCase
+class ProjectControllerStoreTest extends WithProjectsAndTasksTestCase
 {
     #[Test]
     public function success(): void
     {
-        $user = User::factory()->create();
         $data = ProjectStoreRequestFactory::new()->create();
 
-        $response = $this->actingAs($user, 'sanctum')
+        $response = $this->actingAs($this->user, 'sanctum')
             ->postJson(route('api.v1.project.store'), $data);
 
         $response->assertStatus(200);
 
         $this->assertDatabaseHas('projects', $data);
 
-        $this->assertDatabaseHas('project_user', [
-            'user_id' => $user->id,
-        ]);
+        $this->assertTrue(
+            Project::where($data)->withoutGlobalScopes()->user($this->user)->exists(),
+            'Project was not assigned to creator.'
+        );
     }
 }

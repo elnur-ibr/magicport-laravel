@@ -5,10 +5,10 @@ declare(strict_types=1);
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ProjectStoreRequest;
-use App\Models\Project;
+use App\Http\Requests\ProjectUpdateRequest;
 use App\Services\ProjectService;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 
 class ProjectController extends Controller
@@ -18,38 +18,48 @@ class ProjectController extends Controller
      */
     public function index(ProjectService $projectService): JsonResponse
     {
-        return response()->json($projectService->all());
+        return response()->json(
+            $projectService->all()
+        );
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(ProjectStoreRequest $request, ProjectService $projectService): JsonResponse
+    public function store(ProjectStoreRequest $request, ProjectService $projectService): Response
     {
-        $projectInstance = $projectService->create(Auth::user(), $request->validated());
+        $projectService->create(Auth::user(), $request->validated());
 
-        return response()->json($projectInstance);
+        return response()->noContent();
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Project $project)
+    public function show(int $id, ProjectService $projectService)
     {
-        $project->loadCount('tasks');
-
-        return response()->json($project);
+        return response()->json(
+            $projectService->get($id)
+        );
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id): void {
+    public function update(ProjectUpdateRequest $request, int $projectId, ProjectService $projectService): Response
+    {
+        $projectService->update($projectId, $request->validated());
 
+        return response()->noContent();
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id): void {}
+    public function destroy(int $projectId, ProjectService $projectService): Response
+    {
+        $projectService->destroy($projectId);
+
+        return response()->noContent();
+    }
 }

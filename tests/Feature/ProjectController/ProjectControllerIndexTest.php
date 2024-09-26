@@ -4,13 +4,12 @@ declare(strict_types=1);
 
 namespace Tests\Feature\ProjectController;
 
+use PHPUnit\Framework\Attributes\Test;
 use Tests\WithProjectsAndTasksTestCase;
 
 class ProjectControllerIndexTest extends WithProjectsAndTasksTestCase
 {
-    /**
-     * A basic feature test example.
-     */
+    #[Test]
     public function success(): void
     {
         $response = $this->actingAs($this->user, 'sanctum')

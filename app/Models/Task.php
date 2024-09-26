@@ -10,6 +10,8 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 /**
+ * 
+ *
  * @property int $id
  * @property int $project_id
  * @property string $name
@@ -17,7 +19,6 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property TaskStatusEnum $status
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
- *
  * @method static \Database\Factories\TaskFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder|Task newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Task newQuery()
@@ -29,7 +30,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @method static \Illuminate\Database\Eloquent\Builder|Task whereProjectId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Task whereStatus($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Task whereUpdatedAt($value)
- *
+ * @property-read \App\Models\Project $project
  * @mixin \Eloquent
  */
 class Task extends Model
