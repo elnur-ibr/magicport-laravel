@@ -13,22 +13,29 @@ use Illuminate\Support\Facades\Auth;
 
 class ProjectController extends Controller
 {
+
+    public function __construct(
+        protected ProjectService $projectService
+    )
+    {
+    }
+
     /**
      * Display a listing of the resource.
      */
-    public function index(ProjectService $projectService): JsonResponse
+    public function index(): JsonResponse
     {
         return response()->json(
-            $projectService->all(Auth::user())
+            $this->projectService->all(Auth::user())
         );
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(ProjectStoreRequest $request, ProjectService $projectService): Response
+    public function store(ProjectStoreRequest $request): Response
     {
-        $projectService->create(Auth::user(), $request->validated());
+        $this->projectService->create(Auth::user(), $request->validated());
 
         return response()->noContent();
     }
@@ -36,19 +43,19 @@ class ProjectController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(int $id, ProjectService $projectService)
+    public function show(int $id)
     {
         return response()->json(
-            $projectService->show($id, Auth::user())
+            $this->projectService->show($id, Auth::user())
         );
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(ProjectUpdateRequest $request, int $projectId, ProjectService $projectService): Response
+    public function update(ProjectUpdateRequest $request, int $projectId): Response
     {
-        $projectService->update(Auth::user(), $projectId, $request->validated());
+        $this->projectService->update(Auth::user(), $projectId, $request->validated());
 
         return response()->noContent();
     }
@@ -56,9 +63,9 @@ class ProjectController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(int $projectId, ProjectService $projectService): Response
+    public function destroy(int $projectId): Response
     {
-        $projectService->destroy(Auth::user(), $projectId);
+        $this->projectService->destroy(Auth::user(), $projectId);
 
         return response()->noContent();
     }

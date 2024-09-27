@@ -6,49 +6,24 @@ namespace App\Services;
 
 use App\Models\Project;
 use App\Repository\TaskRepository;
-use Illuminate\Auth\Access\Gate;
-use Illuminate\Support\Facades\DB;
+use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
+use Illuminate\Support\Facades\Gate;
 
 class TaskService
 {
-    private TaskRepository $repository;
-
-    public function __construct()
+    public function __construct(private TaskRepository $repository)
     {
-        $this->repository = new TaskRepository();
+
     }
 
-    public function all()
-    {
-        return $this->repository->all();
-    }
 
-    public function get(int $projectId)
-    {
-        return $this->repository->get($projectId);
-    }
 
-    public function create(array $data)
+    public function create(AuthenticatableContract $user, array $data)
     {
-        $project = Project::find($data['project_id']);
-
-        Gate::authorize('haveAccess', $project);
+        Gate::forUser($user)->authorize('createTask', [Project::class, $data['project_id']]);
 
         return $this->repository->create($data);
     }
 
-    public function update(int $projectId, array $data)
-    {
-        return $this->repository->update($projectId, $data);
-    }
 
-    public function destroy(int $projectId): void
-    {
-        DB::beginTransaction();
-
-        Project::destroy($projectId)
-//        Project::where('id',$projectId)->delete()
-            ? DB::commit()
-            : DB::rollBack();
-    }
 }

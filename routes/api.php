@@ -12,6 +12,7 @@ Route::prefix('api')->name('api.')->group(function (): void {
 
         Route::middleware(['auth:sanctum'])->group(function (): void {
             Route::apiResource('project', ProjectController::class);
+            Route::apiResource('task', ProjectController::class);
         });
     });
 });

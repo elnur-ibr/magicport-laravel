@@ -6,6 +6,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\ProjectUpdateRequest;
 use App\Http\Requests\TaskStoreRequest;
+use App\Services\ProjectService;
 use App\Services\TaskService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Response;
@@ -13,22 +14,28 @@ use Illuminate\Support\Facades\Auth;
 
 class TaskController extends Controller
 {
+    public function __construct(
+        protected TaskService $taskService
+    )
+    {
+    }
+
     /**
      * Display a listing of the resource.
      */
-    public function index(TaskService $taskService): JsonResponse
+    public function index(): JsonResponse
     {
         return response()->json(
-            $taskService->all()
+            $this->taskService->all(Auth::user())
         );
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(TaskStoreRequest $request, TaskService $taskService): Response
+    public function store(TaskStoreRequest $request): Response
     {
-        $taskService->create(Auth::user(), $request->validated());
+        $this->taskService->create(Auth::user(), $request->validated());
 
         return response()->noContent();
     }
