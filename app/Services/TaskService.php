@@ -5,10 +5,8 @@ declare(strict_types=1);
 namespace App\Services;
 
 use App\Models\Project;
-use App\Repository\ProjectRepository;
 use App\Repository\TaskRepository;
 use Illuminate\Auth\Access\Gate;
-use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Support\Facades\DB;
 
 class TaskService
@@ -17,7 +15,7 @@ class TaskService
 
     public function __construct()
     {
-        $this->repository = new TaskRepository;
+        $this->repository = new TaskRepository();
     }
 
     public function all()

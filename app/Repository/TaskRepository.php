@@ -6,7 +6,6 @@ namespace App\Repository;
 
 use App\Models\Project;
 use App\Models\Task;
-use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 
 class TaskRepository

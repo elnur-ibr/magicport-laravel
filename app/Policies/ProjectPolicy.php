@@ -14,9 +14,7 @@ class ProjectPolicy
     /**
      * Create a new policy instance.
      */
-    public function __construct()
-    {
-    }
+    public function __construct() {}
 
     public function show(User $user, int|Project $project): Response
     {
