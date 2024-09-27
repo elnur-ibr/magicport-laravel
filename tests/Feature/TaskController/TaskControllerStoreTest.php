@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace ProjectController;
+namespace TaskController;
 
 use App\Models\Project;
 use PHPUnit\Framework\Attributes\Test;
 use Tests\RequestFactories\ProjectStoreRequestFactory;
 use Tests\WithProjectsAndTasksTestCase;
 
-class ProjectControllerStoreTest extends WithProjectsAndTasksTestCase
+class TaskControllerStoreTest extends WithProjectsAndTasksTestCase
 {
     #[Test]
     public function success(): void
@@ -19,12 +19,12 @@ class ProjectControllerStoreTest extends WithProjectsAndTasksTestCase
         $response = $this->actingAs($this->user, 'sanctum')
             ->postJson(route('api.v1.project.store'), $data);
 
-        $response->assertStatus(204);
+        $response->assertStatus(200);
 
         $this->assertDatabaseHas('projects', $data);
 
         $this->assertTrue(
-            Project::where($data)->withoutGlobalScopes()->forUser($this->user)->exists(),
+            Project::where($data)->withoutGlobalScopes()->user($this->user)->exists(),
             'Project was not assigned to creator.'
         );
     }

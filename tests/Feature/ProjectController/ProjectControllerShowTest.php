@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace ProjectController;
 
 use App\Models\Project;
+use Illuminate\Support\Facades\DB;
 use PHPUnit\Framework\Attributes\Test;
 use Tests\WithProjectsAndTasksTestCase;
 

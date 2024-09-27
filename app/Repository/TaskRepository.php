@@ -5,15 +5,15 @@ declare(strict_types=1);
 namespace App\Repository;
 
 use App\Models\Project;
+use App\Models\Task;
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 
-class ProjectRepository
+class TaskRepository
 {
-    public function all(AuthenticatableContract $user): LengthAwarePaginator
+    public function all(): LengthAwarePaginator
     {
         return Project::withCount('tasks')
-            ->forUser($user)
             ->paginate();
     }
 
@@ -24,14 +24,11 @@ class ProjectRepository
             ->firstOrFail();
     }
 
-    public function create(AuthenticatableContract $user, array $data): Project
+    public function create(array $data): Project
     {
-        $project = Project::create($data);
+        $task = Task::create($data);
 
-        $project->users()->attach($user);
-        $project->save();
-
-        return $project;
+        return Task::create($data);
     }
 
     public function update(int $projectId, array $data): Project

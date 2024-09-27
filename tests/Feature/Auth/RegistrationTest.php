@@ -20,8 +20,6 @@ class RegistrationTest extends TestCase
             'password_confirmation' => 'password',
         ]);
 
-        dump($response->status(), $response->json());
-
         $response->assertOk()->assertJsonStructure([
             'token',
         ]);

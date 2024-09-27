@@ -6,10 +6,12 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\ProjectStoreRequest;
 use App\Http\Requests\ProjectUpdateRequest;
+use App\Models\Project;
 use App\Services\ProjectService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 
 class ProjectController extends Controller
 {
@@ -19,7 +21,7 @@ class ProjectController extends Controller
     public function index(ProjectService $projectService): JsonResponse
     {
         return response()->json(
-            $projectService->all()
+            $projectService->all(Auth::user())
         );
     }
 
@@ -39,7 +41,7 @@ class ProjectController extends Controller
     public function show(int $id, ProjectService $projectService)
     {
         return response()->json(
-            $projectService->get($id)
+            $projectService->show($id, Auth::user())
         );
     }
 
@@ -48,7 +50,7 @@ class ProjectController extends Controller
      */
     public function update(ProjectUpdateRequest $request, int $projectId, ProjectService $projectService): Response
     {
-        $projectService->update($projectId, $request->validated());
+        $projectService->update(Auth::user(), $projectId, $request->validated());
 
         return response()->noContent();
     }
@@ -58,7 +60,7 @@ class ProjectController extends Controller
      */
     public function destroy(int $projectId, ProjectService $projectService): Response
     {
-        $projectService->destroy($projectId);
+        $projectService->destroy(Auth::user(), $projectId);
 
         return response()->noContent();
     }

@@ -5,9 +5,11 @@ declare(strict_types=1);
 namespace App\Services;
 
 use App\Models\Project;
+use App\Models\User;
 use App\Repository\ProjectRepository;
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Gate;
 
 class ProjectService
 {
@@ -18,13 +20,15 @@ class ProjectService
         $this->repository = new ProjectRepository();
     }
 
-    public function all()
+    public function all(AuthenticatableContract $user)
     {
-        return $this->repository->all();
+        return $this->repository->all($user);
     }
 
-    public function get(int $projectId)
+    public function show(int $projectId, AuthenticatableContract $user): ?Project
     {
+        Gate::forUser($user)->authorize('show', [Project::class, $projectId]);
+
         return $this->repository->get($projectId);
     }
 
@@ -33,17 +37,20 @@ class ProjectService
         return $this->repository->create($user, $data);
     }
 
-    public function update(int $projectId, array $data)
+    public function update(AuthenticatableContract $user, int $projectId, array $data)
     {
+        Gate::forUser($user)->authorize('update', [Project::class, $projectId]);
+
         return $this->repository->update($projectId, $data);
     }
 
-    public function destroy(int $projectId): void
+    public function destroy(AuthenticatableContract $user, int $projectId): void
     {
+        Gate::forUser($user)->authorize('destroy', [Project::class, $projectId]);
+
         DB::beginTransaction();
 
         Project::destroy($projectId)
-//        Project::where('id',$projectId)->delete()
             ? DB::commit()
             : DB::rollBack();
     }
