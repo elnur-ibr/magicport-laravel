@@ -14,8 +14,14 @@ class ProjectPolicy
     /**
      * Create a new policy instance.
      */
-    public function __construct()
+    public function __construct() {}
+
+    protected function isProjectAssigned(User $user, int|Project $project): bool
     {
+        return ProjectUser::where([
+            'project_id' => is_int($project) ? $project : $project->id,
+            'user_id'    => $user->id,
+        ])->exists();
     }
 
     public function show(User $user, int|Project $project): Response
@@ -58,13 +64,5 @@ class ProjectPolicy
         return $this->isProjectAssigned($user, $project)
             ? Response::allow()
             : Response::denyAsNotFound();
-    }
-
-    protected function isProjectAssigned(User $user, int|Project $project): bool
-    {
-        return ProjectUser::where([
-            'project_id' => is_int($project) ? $project : $project->id,
-            'user_id'    => $user->id,
-        ])->exists();
     }
 }

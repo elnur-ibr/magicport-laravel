@@ -28,8 +28,8 @@ class TaskControllerUpdateTest extends WithProjectsAndTasksTestCase
         $response->assertStatus(200);
 
         $this->assertDatabaseHas('tasks', array_merge($data, [
-            'id' => $task->id,
-            'status'  => TaskStatusEnum::IN_PROGRESS->value,
+            'id'     => $task->id,
+            'status' => TaskStatusEnum::IN_PROGRESS->value,
         ]));
     }
 }
