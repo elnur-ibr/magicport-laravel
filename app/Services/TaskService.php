@@ -13,17 +13,13 @@ class TaskService
 {
     public function __construct(private TaskRepository $repository)
     {
-
     }
 
 
-
-    public function create(AuthenticatableContract $user, array $data)
+    public function create(AuthenticatableContract $user, int $projectId, array $data)
     {
-        Gate::forUser($user)->authorize('createTask', [Project::class, $data['project_id']]);
+        Gate::forUser($user)->authorize('createTask', [Project::class, $projectId]);
 
-        return $this->repository->create($data);
+        return $this->repository->create($projectId, $data);
     }
-
-
 }

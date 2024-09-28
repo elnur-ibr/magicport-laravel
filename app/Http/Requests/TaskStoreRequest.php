@@ -26,7 +26,6 @@ class TaskStoreRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'project_id'  => 'required|int|min:0',
             'name'        => 'required|string|max:200',
             'description' => 'sometimes|string|max:500',
             'status'      => ['sometimes', Rule::enum(TaskStatusEnum::class)],

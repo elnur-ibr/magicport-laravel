@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use App\Http\Controllers\ProjectController;
+use App\Http\Controllers\TaskController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -12,7 +13,7 @@ Route::prefix('api')->name('api.')->group(function (): void {
 
         Route::middleware(['auth:sanctum'])->group(function (): void {
             Route::apiResource('project', ProjectController::class);
-            Route::apiResource('task', ProjectController::class);
+            Route::apiResource('project.task', TaskController::class)->whereNumber('project');
         });
     });
 });
