@@ -6,6 +6,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\ProjectUpdateRequest;
 use App\Http\Requests\TaskStoreRequest;
+use App\Http\Requests\TaskUpdateRequest;
 use App\Services\TaskService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Response;
@@ -15,7 +16,9 @@ class TaskController extends Controller
 {
     public function __construct(
         protected TaskService $taskService
-    ) {}
+    )
+    {
+    }
 
     /**
      * Display a listing of the resource.
@@ -50,9 +53,9 @@ class TaskController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(ProjectUpdateRequest $request, int $projectId, TaskService $taskService): Response
+    public function update(TaskUpdateRequest $request, int $projectId, int $taskId): Response
     {
-        $taskService->update($projectId, $request->validated());
+        $this->taskService->update(Auth::user(), $projectId, $taskId, $request->validated());
 
         return response()->noContent();
     }

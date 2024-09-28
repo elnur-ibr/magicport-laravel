@@ -26,4 +26,11 @@ class TaskService
 
         return $this->repository->create($projectId, $data);
     }
+
+    public function update(AuthenticatableContract $user, int $projectId,int $taskId, array $data)
+    {
+        Gate::forUser($user)->authorize('updateTask', [Project::class, $projectId]);
+
+        return $this->repository->update($taskId, $data);
+    }
 }

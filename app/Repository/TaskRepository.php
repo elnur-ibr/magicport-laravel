@@ -25,4 +25,17 @@ class TaskRepository
             $data
         ));
     }
+
+    public function update(int $taskId, array $data): Task
+    {
+        $task = Task::where('id', $taskId)->firstOrFail();
+
+        return Task::create(array_merge(
+            [
+                'status'     => TaskStatusEnum::TODO,
+                'project_id' => $projectId,
+            ],
+            $data
+        ));
+    }
 }
