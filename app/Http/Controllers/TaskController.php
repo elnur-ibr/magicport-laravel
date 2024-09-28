@@ -15,9 +15,7 @@ class TaskController extends Controller
 {
     public function __construct(
         protected TaskService $taskService
-    )
-    {
-    }
+    ) {}
 
     /**
      * Display a listing of the resource.

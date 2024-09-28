@@ -13,12 +13,9 @@ use Illuminate\Support\Facades\Auth;
 
 class ProjectController extends Controller
 {
-
     public function __construct(
         protected ProjectService $projectService
-    )
-    {
-    }
+    ) {}
 
     /**
      * Display a listing of the resource.

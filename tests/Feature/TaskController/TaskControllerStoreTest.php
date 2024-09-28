@@ -6,9 +6,7 @@ namespace TaskController;
 
 use App\Enums\TaskStatusEnum;
 use App\Models\Project;
-use Illuminate\Support\Facades\DB;
 use PHPUnit\Framework\Attributes\Test;
-use Tests\RequestFactories\ProjectStoreRequestFactory;
 use Tests\RequestFactories\TaskStoreRequestFactory;
 use Tests\WithProjectsAndTasksTestCase;
 
@@ -23,9 +21,9 @@ class TaskControllerStoreTest extends WithProjectsAndTasksTestCase
             ->create();
 
         $response = $this->actingAs($this->user, 'sanctum')
-            ->postJson(route('api.v1.project.task.store',['project' => '1a']), $data);
+            ->postJson(route('api.v1.project.task.store', ['project' => '1a']), $data);
 
-        dump($response->status(),$response->json());
+        dump($response->status(), $response->json());
 
         $response->assertStatus(200);
 
@@ -42,7 +40,7 @@ class TaskControllerStoreTest extends WithProjectsAndTasksTestCase
             ->create();
 
         $response = $this->actingAs($this->user, 'sanctum')
-            ->postJson(route('api.v1.project.task.store',['project' => $project->id]), $data);
+            ->postJson(route('api.v1.project.task.store', ['project' => $project->id]), $data);
 
         $response->assertStatus(200);
 
@@ -58,7 +56,7 @@ class TaskControllerStoreTest extends WithProjectsAndTasksTestCase
             ->create();
 
         $response = $this->actingAs($this->user, 'sanctum')
-            ->postJson(route('api.v1.project.task.store',['project' => $project->id]), $data);
+            ->postJson(route('api.v1.project.task.store', ['project' => $project->id]), $data);
 
         $response->assertStatus(404);
 

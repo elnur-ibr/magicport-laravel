@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Tests\RequestFactories;
 
 use App\Enums\TaskStatusEnum;
-use App\Models\Project;
 use Worksome\RequestFactories\RequestFactory;
 
 class TaskStoreRequestFactory extends RequestFactory

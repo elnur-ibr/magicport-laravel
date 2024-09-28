@@ -11,10 +11,7 @@ use Illuminate\Support\Facades\Gate;
 
 class TaskService
 {
-    public function __construct(private TaskRepository $repository)
-    {
-    }
-
+    public function __construct(private TaskRepository $repository) {}
 
     public function create(AuthenticatableContract $user, int $projectId, array $data)
     {

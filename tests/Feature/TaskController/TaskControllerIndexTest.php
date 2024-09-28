@@ -5,10 +5,7 @@ declare(strict_types=1);
 namespace TaskController;
 
 use App\Enums\TaskStatusEnum;
-use App\Models\Project;
-use Illuminate\Support\Facades\DB;
 use PHPUnit\Framework\Attributes\Test;
-use Tests\RequestFactories\ProjectStoreRequestFactory;
 use Tests\RequestFactories\TaskStoreRequestFactory;
 use Tests\WithProjectsAndTasksTestCase;
 

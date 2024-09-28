@@ -13,8 +13,8 @@ class TaskRepository
     {
         return Task::create(array_merge(
             [
-                'status' => TaskStatusEnum::TODO,
-                'project_id' => $projectId
+                'status'     => TaskStatusEnum::TODO,
+                'project_id' => $projectId,
             ],
             $data
         ));
