@@ -5,9 +5,7 @@ declare(strict_types=1);
 namespace App\Repository;
 
 use App\Enums\TaskStatusEnum;
-use App\Models\Project;
 use App\Models\Task;
-use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 
 class TaskRepository

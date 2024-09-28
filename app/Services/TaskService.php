@@ -11,9 +11,7 @@ use Illuminate\Support\Facades\Gate;
 
 class TaskService
 {
-    public function __construct(private TaskRepository $repository)
-    {
-    }
+    public function __construct(private TaskRepository $repository) {}
 
     public function all(AuthenticatableContract $user, int $projectId)
     {
@@ -21,7 +19,6 @@ class TaskService
 
         return $this->repository->all($projectId);
     }
-
 
     public function create(AuthenticatableContract $user, int $projectId, array $data)
     {

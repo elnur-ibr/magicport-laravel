@@ -4,9 +4,7 @@ declare(strict_types=1);
 
 namespace TaskController;
 
-use App\Enums\TaskStatusEnum;
 use PHPUnit\Framework\Attributes\Test;
-use Tests\RequestFactories\TaskStoreRequestFactory;
 use Tests\WithProjectsAndTasksTestCase;
 
 class TaskControllerIndexTest extends WithProjectsAndTasksTestCase
@@ -18,7 +16,7 @@ class TaskControllerIndexTest extends WithProjectsAndTasksTestCase
         $project->loadMissing('tasks');
 
         $response = $this->actingAs($this->user, 'sanctum')
-            ->getJson(route('api.v1.project.task.index',['project' => $project->id]));
+            ->getJson(route('api.v1.project.task.index', ['project' => $project->id]));
 
         $response->assertStatus(200)->assertJsonStructure([
             'total',
@@ -26,7 +24,7 @@ class TaskControllerIndexTest extends WithProjectsAndTasksTestCase
             'current_page',
         ])->assertJsonFragment([
             'current_page' => 1,
-            'data' => $project->tasks->toArray(),
+            'data'         => $project->tasks->toArray(),
         ]);
     }
 }

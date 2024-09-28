@@ -14,7 +14,7 @@ class ProjectControllerUpdateTest extends WithProjectsAndTasksTestCase
     #[Test]
     public function success(): void
     {
-        $data = ProjectStoreRequestFactory::new()->create();
+        $data    = ProjectStoreRequestFactory::new()->create();
         $project = $this->projects->get(2);
 
         $response = $this->actingAs($this->user, 'sanctum')
@@ -32,7 +32,7 @@ class ProjectControllerUpdateTest extends WithProjectsAndTasksTestCase
     #[Test]
     public function tryingToUpdateProjectThatDoesNotBelongToUser(): void
     {
-        $data = ProjectStoreRequestFactory::new()->create();
+        $data    = ProjectStoreRequestFactory::new()->create();
         $project = Project::factory()->withRandomUsers()->create();
 
         $response = $this->actingAs($this->user, 'sanctum')
@@ -51,7 +51,7 @@ class ProjectControllerUpdateTest extends WithProjectsAndTasksTestCase
     #[Test]
     public function whenStringUsedInUrl(): void
     {
-        $data = ProjectStoreRequestFactory::new()->create();
+        $data    = ProjectStoreRequestFactory::new()->create();
         $project = $this->projects->get(2);
 
         $response = $this->actingAs($this->user, 'sanctum')
