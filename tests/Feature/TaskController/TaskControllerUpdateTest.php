@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace TaskController;
 
 use App\Enums\TaskStatusEnum;
-use App\Models\Project;
 use PHPUnit\Framework\Attributes\Test;
 use Tests\RequestFactories\TaskStoreRequestFactory;
 use Tests\WithProjectsAndTasksTestCase;
@@ -29,7 +28,7 @@ class TaskControllerUpdateTest extends WithProjectsAndTasksTestCase
 
         $this->assertDatabaseHas('tasks', array_merge($data, [
             'task_id' => $task->id,
-            'status'  => TaskStatusEnum::TODO->value
+            'status'  => TaskStatusEnum::TODO->value,
         ]));
     }
 }
