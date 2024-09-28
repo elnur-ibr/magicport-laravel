@@ -16,9 +16,10 @@ class TaskControllerUpdateTest extends WithProjectsAndTasksTestCase
     {
         $project = $this->projects->get(2);
         $project->loadMissing('tasks');
-        $task = $project->tasks->get(2);
+        $task = $project->tasks->random();
 
         $data = TaskStoreRequestFactory::new()
+            ->statusInProgress()
             ->create();
 
         $response = $this->actingAs($this->user, 'sanctum')
@@ -27,8 +28,8 @@ class TaskControllerUpdateTest extends WithProjectsAndTasksTestCase
         $response->assertStatus(200);
 
         $this->assertDatabaseHas('tasks', array_merge($data, [
-            'task_id' => $task->id,
-            'status'  => TaskStatusEnum::TODO->value,
+            'id' => $task->id,
+            'status'  => TaskStatusEnum::IN_PROGRESS->value,
         ]));
     }
 }

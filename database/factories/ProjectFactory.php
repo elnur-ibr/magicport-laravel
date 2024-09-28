@@ -39,7 +39,7 @@ class ProjectFactory extends Factory
     {
         return $this->afterCreating(function (Project $project): void {
             Task::factory(['project_id' => $project->id])
-                ->count(rand(1, 10))
+                ->count(rand(2, 10))
                 ->sequence(
                     ['status' => TaskStatusEnum::TODO],
                     ['status' => TaskStatusEnum::IN_PROGRESS],

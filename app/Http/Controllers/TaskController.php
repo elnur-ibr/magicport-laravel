@@ -15,7 +15,9 @@ class TaskController extends Controller
 {
     public function __construct(
         protected TaskService $taskService
-    ) {}
+    )
+    {
+    }
 
     /**
      * Display a listing of the resource.
@@ -50,11 +52,11 @@ class TaskController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(TaskUpdateRequest $request, int $projectId, int $taskId): Response
+    public function update(TaskUpdateRequest $request, int $projectId, int $taskId): JsonResponse
     {
-        $this->taskService->update(Auth::user(), $projectId, $taskId, $request->validated());
-
-        return response()->noContent();
+        return response()->json(
+            $this->taskService->update(Auth::user(), $projectId, $taskId, $request->validated())
+        );
     }
 
     /**

@@ -30,12 +30,8 @@ class TaskRepository
     {
         $task = Task::where('id', $taskId)->firstOrFail();
 
-        return Task::create(array_merge(
-            [
-                'status'     => TaskStatusEnum::TODO,
-                'project_id' => $projectId,
-            ],
-            $data
-        ));
+        $task->update($data);
+
+        return $task;
     }
 }
