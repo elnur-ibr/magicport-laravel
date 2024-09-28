@@ -18,7 +18,7 @@ class TaskPolicy
     public function __construct() {}
 
     /**
-     * CHecking if project assigned to user and task related to project
+     * Checking if project assigned to user and task related to project
      */
     protected function isProjectAssignedAndTaskRelated(User $user, int|Project $project, int|Task $task): bool
     {
@@ -29,6 +29,13 @@ class TaskPolicy
     }
 
     public function update(User $user, int|Project $project, int|Task $task): Response
+    {
+        return $this->isProjectAssignedAndTaskRelated($user, $project, $task)
+            ? Response::allow()
+            : Response::denyAsNotFound();
+    }
+
+    public function show(User $user, int|Project $project, int|Task $task): Response
     {
         return $this->isProjectAssignedAndTaskRelated($user, $project, $task)
             ? Response::allow()

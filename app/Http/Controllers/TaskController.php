@@ -40,10 +40,10 @@ class TaskController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(int $id, TaskService $taskService)
+    public function show(int $projectId, int $taskId)
     {
         return response()->json(
-            $taskService->get($id)
+            $this->taskService->show(Auth::user(), $projectId, $taskId)
         );
     }
 

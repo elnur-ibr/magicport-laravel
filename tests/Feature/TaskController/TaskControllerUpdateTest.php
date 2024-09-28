@@ -32,4 +32,28 @@ class TaskControllerUpdateTest extends WithProjectsAndTasksTestCase
             'status' => TaskStatusEnum::IN_PROGRESS->value,
         ]));
     }
+
+    #[Test]
+    public function tryingToUpdateTaskThatNotRelatedToProject(): void
+    {
+        $project = $this->projects->get(2);
+        $project->loadMissing('tasks');
+        $task = $this->projects->get(1)->tasks->random();
+
+        $data = TaskStoreRequestFactory::new()
+            ->statusInProgress()
+            ->create();
+
+        $response = $this->actingAs($this->user, 'sanctum')
+            ->putJson(route('api.v1.project.task.update', ['project' => $project->id, 'task' => $task->id]), $data);
+
+        $response->assertStatus(404);
+
+        $this->assertDatabaseHas('tasks', [
+            'id'          => $task->id,
+            'name'        => $task->name,
+            'description' => $task->description,
+            'status'      => $task->status,
+        ]);
+    }
 }

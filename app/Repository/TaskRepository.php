@@ -26,6 +26,11 @@ class TaskRepository
         ));
     }
 
+    public function show(int $taskId): Task
+    {
+        return Task::find($taskId);
+    }
+
     public function update(int $taskId, array $data): Task
     {
         $task = Task::where('id', $taskId)->firstOrFail();

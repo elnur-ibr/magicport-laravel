@@ -10,7 +10,7 @@ use Tests\WithProjectsAndTasksTestCase;
 class TaskControllerIndexTest extends WithProjectsAndTasksTestCase
 {
     #[Test]
-    public function successNoStatus(): void
+    public function success(): void
     {
         $project = $this->projects->get(2);
         $project->loadMissing('tasks');

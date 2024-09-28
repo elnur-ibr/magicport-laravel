@@ -8,7 +8,7 @@ use App\Models\Project;
 use PHPUnit\Framework\Attributes\Test;
 use Tests\WithProjectsAndTasksTestCase;
 
-class ProjectControllerDeleteTest extends WithProjectsAndTasksTestCase
+class ProjectControllerDestroyTest extends WithProjectsAndTasksTestCase
 {
     #[Test]
     public function success(): void
