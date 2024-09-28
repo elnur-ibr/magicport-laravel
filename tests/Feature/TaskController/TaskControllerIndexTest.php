@@ -15,16 +15,18 @@ class TaskControllerIndexTest extends WithProjectsAndTasksTestCase
     public function successNoStatus(): void
     {
         $project = $this->projects->get(2);
-
-        $data = TaskStoreRequestFactory::new()
-            ->projectId($project->id)
-            ->create();
+        $project->loadMissing('tasks');
 
         $response = $this->actingAs($this->user, 'sanctum')
-            ->postJson(route('api.v1.task.store'), $data);
+            ->getJson(route('api.v1.project.task.index',['project' => $project->id]));
 
-        $response->assertStatus(200);
-
-        $this->assertDatabaseHas('tasks', array_merge($data, ['status' => TaskStatusEnum::TODO->value]));
+        $response->assertStatus(200)->assertJsonStructure([
+            'total',
+            'data',
+            'current_page',
+        ])->assertJsonFragment([
+            'current_page' => 1,
+            'data' => $project->tasks->toArray(),
+        ]);
     }
 }

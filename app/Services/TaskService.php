@@ -11,7 +11,17 @@ use Illuminate\Support\Facades\Gate;
 
 class TaskService
 {
-    public function __construct(private TaskRepository $repository) {}
+    public function __construct(private TaskRepository $repository)
+    {
+    }
+
+    public function all(AuthenticatableContract $user, int $projectId)
+    {
+        Gate::forUser($user)->authorize('allTask', [Project::class, $projectId]);
+
+        return $this->repository->all($projectId);
+    }
+
 
     public function create(AuthenticatableContract $user, int $projectId, array $data)
     {

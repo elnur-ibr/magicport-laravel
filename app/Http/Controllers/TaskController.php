@@ -20,10 +20,10 @@ class TaskController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(): JsonResponse
+    public function index(int $projectId): JsonResponse
     {
         return response()->json(
-            $this->taskService->all(Auth::user())
+            $this->taskService->all(Auth::user(), $projectId)
         );
     }
 
@@ -32,8 +32,6 @@ class TaskController extends Controller
      */
     public function store(TaskStoreRequest $request, int $projectId): JsonResponse
     {
-        dump();
-
         return response()->json(
             $this->taskService->create(Auth::user(), $projectId, $request->validated())
         );

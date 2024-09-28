@@ -21,9 +21,7 @@ class TaskControllerStoreTest extends WithProjectsAndTasksTestCase
             ->create();
 
         $response = $this->actingAs($this->user, 'sanctum')
-            ->postJson(route('api.v1.project.task.store', ['project' => '1a']), $data);
-
-        dump($response->status(), $response->json());
+            ->postJson(route('api.v1.project.task.store', ['project' => $project->id]), $data);
 
         $response->assertStatus(200);
 

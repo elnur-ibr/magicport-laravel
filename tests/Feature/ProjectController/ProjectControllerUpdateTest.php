@@ -14,7 +14,7 @@ class ProjectControllerUpdateTest extends WithProjectsAndTasksTestCase
     #[Test]
     public function success(): void
     {
-        $data    = ProjectStoreRequestFactory::new()->create();
+        $data = ProjectStoreRequestFactory::new()->create();
         $project = $this->projects->get(2);
 
         $response = $this->actingAs($this->user, 'sanctum')
@@ -32,7 +32,7 @@ class ProjectControllerUpdateTest extends WithProjectsAndTasksTestCase
     #[Test]
     public function tryingToUpdateProjectThatDoesNotBelongToUser(): void
     {
-        $data    = ProjectStoreRequestFactory::new()->create();
+        $data = ProjectStoreRequestFactory::new()->create();
         $project = Project::factory()->withRandomUsers()->create();
 
         $response = $this->actingAs($this->user, 'sanctum')
@@ -40,7 +40,26 @@ class ProjectControllerUpdateTest extends WithProjectsAndTasksTestCase
 
         $response->assertStatus(404);
 
-        // To make sure nothing changed
+        // Asserting nothig has changed
+        $this->assertDatabaseHas('projects', [
+            'id'          => $project->id,
+            'name'        => $project->name,
+            'description' => $project->description,
+        ]);
+    }
+
+    #[Test]
+    public function whenStringUsedInUrl(): void
+    {
+        $data = ProjectStoreRequestFactory::new()->create();
+        $project = $this->projects->get(2);
+
+        $response = $this->actingAs($this->user, 'sanctum')
+            ->putJson(route('api.v1.project.update', ['project' => $project->id . 'a']), $data);
+
+        $response->assertStatus(404);
+
+        // Asserting nothig has changed
         $this->assertDatabaseHas('projects', [
             'id'          => $project->id,
             'name'        => $project->name,

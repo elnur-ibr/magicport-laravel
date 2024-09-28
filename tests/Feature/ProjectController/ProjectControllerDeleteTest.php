@@ -39,4 +39,19 @@ class ProjectControllerDeleteTest extends WithProjectsAndTasksTestCase
         $this->assertDatabaseHas('tasks', ['project_id' => $project->id]);
         $this->assertDatabaseHas('project_user', ['project_id' => $project->id]);
     }
+
+    #[Test]
+    public function tryingStringInUrl(): void
+    {
+        $project = $this->projects->get(2);
+
+        $response = $this->actingAs($this->user, 'sanctum')
+            ->deleteJson(route('api.v1.project.destroy', ['project' => $project->id.'a']));
+
+        $response->assertStatus(404);
+
+        $this->assertDatabaseHas('projects', ['id' => $project->id]);
+        $this->assertDatabaseHas('tasks', ['project_id' => $project->id]);
+        $this->assertDatabaseHas('project_user', ['project_id' => $project->id,'user_id' => $this->user->id]);
+    }
 }

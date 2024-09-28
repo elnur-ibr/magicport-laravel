@@ -55,4 +55,14 @@ class ProjectPolicy
             ? Response::allow()
             : Response::denyAsNotFound();
     }
+
+    public function allTask(User $user, int|Project $project): Response
+    {
+        return ProjectUser::where([
+            'project_id' => is_int($project) ? $project : $project->id,
+            'user_id'    => $user->id,
+        ])->exists()
+            ? Response::allow()
+            : Response::denyAsNotFound();
+    }
 }

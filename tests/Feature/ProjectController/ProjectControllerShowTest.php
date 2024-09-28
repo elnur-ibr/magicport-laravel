@@ -37,4 +37,15 @@ class ProjectControllerShowTest extends WithProjectsAndTasksTestCase
 
         $response->assertStatus(404);
     }
+
+    #[Test]
+    public function whenStringUsedInUrl(): void
+    {
+        $project = $this->projects->get(2);
+
+        $response = $this->actingAs($this->user, 'sanctum')
+            ->getJson(route('api.v1.project.show', ['project' => $project->id . 'a']));
+
+        $response->assertStatus(404);
+    }
 }
