@@ -60,9 +60,9 @@ class TaskController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(int $projectId, TaskService $taskService): Response
+    public function destroy(int $projectId, int $taskId): Response
     {
-        $taskService->destroy($projectId);
+        $this->taskService->destroy(Auth::user(),$projectId, $taskId);
 
         return response()->noContent();
     }

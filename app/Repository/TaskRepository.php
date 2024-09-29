@@ -39,4 +39,10 @@ class TaskRepository
 
         return $task;
     }
+
+    public function destroy(int $taskId)
+    {
+        dump();
+        return Task::where('id', $taskId)->delete();
+    }
 }

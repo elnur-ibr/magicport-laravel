@@ -41,4 +41,11 @@ class TaskService
 
         return $this->repository->update($taskId, $data);
     }
+
+    public function destroy(AuthenticatableContract $user, int $projectId, int $taskId): void
+    {
+        Gate::forUser($user)->authorize('destroy', [Task::class, $projectId, $taskId]);
+
+        $this->repository->destroy($taskId);
+    }
 }

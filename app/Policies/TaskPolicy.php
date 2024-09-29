@@ -41,4 +41,11 @@ class TaskPolicy
             ? Response::allow()
             : Response::denyAsNotFound();
     }
+
+    public function destroy(User $user, int|Project $project, int|Task $task): Response
+    {
+        return $this->isProjectAssignedAndTaskRelated($user, $project, $task)
+            ? Response::allow()
+            : Response::denyAsNotFound();
+    }
 }

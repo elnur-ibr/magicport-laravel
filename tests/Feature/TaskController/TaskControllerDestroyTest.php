@@ -17,15 +17,13 @@ class TaskControllerDestroyTest extends WithProjectsAndTasksTestCase
         $task = $project->tasks->random();
 
         $response = $this->actingAs($this->user, 'sanctum')
-            ->getJson(route('api.v1.project.task.destroy', ['project' => $project->id, 'task' => $task->id]));
+            ->deleteJson(route('api.v1.project.task.destroy', ['project' => $project->id, 'task' => $task->id]));
+        dump($response->status(),$response->content());
 
-        $response->assertStatus(200)
-            ->assertJsonFragment([
-                'id'          => $task->id,
-                'project_id'  => $task->project_id,
-                'name'        => $task->name,
-                'description' => $task->description,
-                'status'      => $task->status,
-            ]);
+        $response->assertStatus(204);
+
+        $this->assertDatabaseMissing('tasks', [
+            'id' => $task->id,
+        ]);
     }
 }
