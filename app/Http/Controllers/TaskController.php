@@ -62,7 +62,7 @@ class TaskController extends Controller
      */
     public function destroy(int $projectId, int $taskId): Response
     {
-        $this->taskService->destroy(Auth::user(),$projectId, $taskId);
+        $this->taskService->destroy(Auth::user(), $projectId, $taskId);
 
         return response()->noContent();
     }

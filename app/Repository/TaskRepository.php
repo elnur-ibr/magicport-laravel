@@ -43,6 +43,7 @@ class TaskRepository
     public function destroy(int $taskId)
     {
         dump();
+
         return Task::where('id', $taskId)->delete();
     }
 }

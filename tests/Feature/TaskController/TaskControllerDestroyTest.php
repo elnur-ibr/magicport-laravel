@@ -18,7 +18,7 @@ class TaskControllerDestroyTest extends WithProjectsAndTasksTestCase
 
         $response = $this->actingAs($this->user, 'sanctum')
             ->deleteJson(route('api.v1.project.task.destroy', ['project' => $project->id, 'task' => $task->id]));
-        dump($response->status(),$response->content());
+        dump($response->status(), $response->content());
 
         $response->assertStatus(204);
 
