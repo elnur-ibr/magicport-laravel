@@ -29,7 +29,7 @@ class AuthenticatedSessionController extends Controller
      */
     public function destroy(Request $request): Response
     {
-        Auth::guard('sanctum')->logout();
+        Auth::guard()->logout();
 
         $request->session()->invalidate();
 
